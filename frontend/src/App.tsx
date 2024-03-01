@@ -1,12 +1,31 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const App = () => {
-  const [recvResp, setRecvResp] = useState([]);
+  const apiUrl = useRef('http://localhost:3000/');
+  const [ recvResp, setRecvResp ] = useState([]);
+
+  const getDati = async () => {
+    setRecvResp(await fetch(apiUrl.current).then(res => res.json()))
+  }
+
   useEffect(() => {
-    fetch('http://127.0.0.1:3000/').then((res) => res.json()).then((res) => console.log(res))
+    getDati();
   }, [])
 
-  return <p>{recvResp}</p>
+  return (
+    <table>
+      <th>Nome</th>
+      <th>Età</th>
+      {recvResp.map((value) => {
+        return (
+          <tr>
+            <td>{value.nome}</td>
+            <td>{value.eta}</td>
+          </tr>
+        )
+      })}
+    </table>
+  )
 }
 
 export default App;

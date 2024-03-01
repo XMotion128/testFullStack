@@ -7,10 +7,12 @@ const port = 3000;
 app.use(cors());
 
 app.get('/', async (req, res) => {
-    let result = [];
+    const result = [];
     const db = new sqlite3.Database('./db/prova.db');
     const sql = 'SELECT * FROM prova';
     
+    // promise necessaria ad assicurarmi che la query
+    // venga effettuata e che i risultati vengano salvati
     await new Promise((resolve, reject) => {
         db.each(sql, (err, row) => {
             result.push(row);
