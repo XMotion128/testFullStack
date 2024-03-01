@@ -4,7 +4,7 @@
   "description": "simple test backend",
   "main": "app.js",
   "scripts": {
-    "test": "node ."
+    "start": "node ."
   },
   "author": "Aldo Ruggiero",
   "license": "ISC",

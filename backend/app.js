@@ -6,24 +6,22 @@ const port = 3000;
 
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    let result = [];
     const db = new sqlite3.Database('./db/prova.db');
-    const result = [];
-
-    async function query() {
-        const result = [];
-
-        await db.each('SELECT * FROM prova', (err, row) => {
+    const sql = 'SELECT * FROM prova';
+    
+    await new Promise((resolve, reject) => {
+        db.each(sql, (err, row) => {
             result.push(row);
-            console.log(result)
-        })
+        }, (err, numrows) => {
+            resolve(numrows);
+        });
+    });
 
-        return result;
-    }
-
-    res.send(query())
+    res.send(JSON.stringify(result));
 })
 
 app.listen(port, () => {
-    console.log(`Express listening on port ${port}`)
+    console.log(`Express listening on port ${port}`);
 })
