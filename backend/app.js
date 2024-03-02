@@ -21,6 +21,7 @@ app.get('/', async (req, res) => {
         });
     });
 
+    db.close();
     res.send(JSON.stringify(result));
 })
 

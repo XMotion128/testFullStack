@@ -4,12 +4,11 @@ const App = () => {
   const apiUrl = useRef('http://localhost:3000/');
   const [ recvResp, setRecvResp ] = useState([]);
 
-  const getDati = async () => {
-    setRecvResp(await fetch(apiUrl.current).then(res => res.json()))
-  }
-
+  // fetch dei dati della tabella presenti nel database
   useEffect(() => {
-    getDati();
+    fetch(apiUrl.current)
+    .then(res => res.json())
+    .then((responseJSON) => setRecvResp(responseJSON))
   }, [])
 
   return (
@@ -19,7 +18,7 @@ const App = () => {
       {recvResp.map((value) => {
         return (
           <tr>
-            <td>{value.nome}</td>
+            <td>{value.nome}</td> {/* i td devono avere una key univoca, da correggere */}
             <td>{value.eta}</td>
           </tr>
         )
